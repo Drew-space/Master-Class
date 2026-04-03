@@ -1,7 +1,6 @@
 import { Subscription } from "./../node_modules/stripe/esm/resources/Subscriptions.d";
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
-import { title } from "process";
 
 export default defineSchema({
   users: defineTable({
@@ -11,7 +10,9 @@ export default defineSchema({
     username: v.string(),
     stripeCustomerId: v.string(),
     currentSubscriptionId: v.optional(v.id("subscriptions")),
-  }).index("by_clerkId", ["clerkId"]),
+  })
+    .index("by_clerkId", ["clerkId"])
+    .index("by_stripeCustomerId", ["stripeCustomerId"]),
 
   courses: defineTable({
     title: v.string(),
@@ -21,7 +22,7 @@ export default defineSchema({
   }),
 
   purchase: defineTable({
-    userId: v.id("user"),
+    userId: v.id("users"),
     courseId: v.id("courses"),
     amount: v.number(),
     purchaseDate: v.number(),
@@ -33,6 +34,7 @@ export default defineSchema({
     planType: v.union(v.literal("month"), v.literal("year")),
     currentPeriodStart: v.number(),
     currentPeriodEnd: v.number(),
+    status: v.string(),
     stripeSubscriptionId: v.string(),
     cancelPeriodEnd: v.boolean(),
   }).index("by_stripeSubscriptionId", ["stripeSubscriptionId"]),

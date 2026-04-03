@@ -3,6 +3,7 @@ import { Webhook } from "./../node_modules/svix/src/webhook";
 import { WebhookEvent } from "./../node_modules/@clerk/backend/dist/api/resources/Webhooks.d";
 import { httpRouter } from "convex/server";
 import { httpAction } from "./_generated/server";
+import stripe from "../lib/stripe";
 
 const http = httpRouter();
 
@@ -45,14 +46,20 @@ const clerkwebhook = httpAction(async (ctx, request) => {
     const name = `${first_name || ""} ${last_name || ""}`.trim();
 
     try {
+      const customer = await stripe.customers.create({
+        email,
+        name,
+        metadata: { clerkId: id, username: username },
+      });
+
       await ctx.runMutation(api.users.createUser, {
         email,
         name,
         clerkId: id,
         username: username || email.split("@")[0],
+        stripeCustomerId: customer.id,
       });
 
-      // TODO: CREATE A STRIPE CUSTOMER AS WELL
       // TODO: SEND A WELCOME EMAIL AS WELL
     } catch (error) {
       console.log("error creating user in convex", error);

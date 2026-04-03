@@ -1,3 +1,4 @@
+import { Stripe } from "stripe";
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 
@@ -7,6 +8,7 @@ export const createUser = mutation({
     name: v.string(),
     clerkId: v.string(),
     username: v.string(),
+    stripeCustomerId: v.string(),
   },
   handler: async (ctx, args) => {
     const existingUser = await ctx.db

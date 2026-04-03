@@ -52,7 +52,7 @@ const Navbar = () => {
               variant="outline"
               size="sm"
               className="flex items-center gap-1.5 text-white
-                bg-violet-500/15 border-violet-400/30
+                bg-violet-500/15 hover:text-white border-violet-400/30
                 hover:bg-violet-500/25 hover:border-violet-400/50
                 transition-all duration-150"
             >
@@ -61,6 +61,7 @@ const Navbar = () => {
             </Button>
           </Link>
         </Show>
+        <div className=""></div>
 
         <UserButton />
 

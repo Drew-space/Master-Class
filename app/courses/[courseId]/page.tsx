@@ -1,11 +1,14 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
+import { Download, PlayCircle } from "lucide-react";
+import Image from "next/image";
 import { use } from "react";
 
 const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
@@ -29,10 +32,54 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
 
   if (!isLoaded) return null;
 
-  if (isLoaded || courseData) {
+  if (!isLoaded || courseData === undefined) {
     return <CourseDetailSkeleton />;
   }
-  return <div> page </div>;
+  return (
+    <section className="container mx-auto py-8 px-4">
+      <Card className="max-w-4xl bg-violet-500/15 ring-violet-400/30 ring-3  mx-auto ">
+        <CardHeader>
+          <Image
+            src={courseData?.imageUrl ?? ""}
+            alt={courseData?.title ?? "Course image"}
+            height={600}
+            width={1200}
+          />
+
+          <CardContent>
+            <CardTitle className="text-3xl mb-4 text-white">
+              {courseData?.title}
+            </CardTitle>
+
+            {userAccess.hasAccess ? (
+              <>
+                <p className="text-white mb-6">{courseData?.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  <Button className="flex items-center justify-center space-x-2">
+                    <PlayCircle className="w-5 h-5" />
+                    <span>Start Course</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="flex items-center justify-center space-x-2"
+                  >
+                    <Download className="w-5 h-5" />
+                    <span>Download Materials</span>
+                  </Button>
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Course Modules</h3>
+                <ul className="space-y-2">
+                  <li className="flex item-center s"></li>
+                </ul>
+              </>
+            ) : (
+              <div className="">hello</div>
+            )}
+          </CardContent>
+        </CardHeader>
+      </Card>
+    </section>
+  );
 };
 
 export default CoursePage;

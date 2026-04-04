@@ -1,3 +1,4 @@
+import PurchaseButton from "@/components/PurchaseButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,7 +67,7 @@ export default async function Home() {
                 </Button>
 
                 <Show when="signed-in">
-                  <Button variant={"ghost"}>Purchase</Button>
+                  <PurchaseButton courseId={course._id} />
                 </Show>
                 <Show when="signed-out">
                   <SignInButton mode="modal">

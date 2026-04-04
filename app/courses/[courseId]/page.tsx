@@ -1,5 +1,6 @@
 "use client";
 
+import PurchaseButton from "@/components/PurchaseButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,7 +8,13 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
-import { Download, PlayCircle } from "lucide-react";
+import {
+  Download,
+  FileText,
+  FileTextIcon,
+  Lock,
+  PlayCircle,
+} from "lucide-react";
 import Image from "next/image";
 import { use } from "react";
 
@@ -37,7 +44,7 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
   }
   return (
     <section className="container mx-auto py-8 px-4">
-      <Card className="max-w-4xl bg-violet-500/15 ring-violet-400/30 ring-3  mx-auto ">
+      <Card className="max-w-xl bg-violet-500/15 ring-violet-400/30 ring-3  mx-auto ">
         <CardHeader>
           <Image
             src={courseData?.imageUrl ?? ""}
@@ -69,11 +76,30 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
                 </div>
                 <h3 className="text-xl font-semibold mb-4">Course Modules</h3>
                 <ul className="space-y-2">
-                  <li className="flex item-center s"></li>
+                  <li className="flex item-center space-x-2">
+                    <FileTextIcon className="size-5 text-white" />
+                    <span>Introduction to Advanced Patterns </span>
+                  </li>
+                  <li className="flex item-center space-x-2">
+                    <FileText className="size-5 text-white" />
+                    <span>Hooks and Custom Hooks </span>
+                  </li>
                 </ul>
               </>
             ) : (
-              <div className="">hello</div>
+              <div className="text-center ">
+                <div className="flex flex-col items-center space-y-4">
+                  <Lock className="size-12 text-white" />
+                  <p className="text-lg  text-white">This course is locked.</p>
+                  <p className="mb-4 text-white">
+                    Enroll in course to access all premium content.
+                  </p>
+                  <p className="text-2xl text-white font-bold mb-2">
+                    {courseData?.price.toFixed(2)}
+                  </p>
+                  <PurchaseButton courseId={courseId} />
+                </div>
+              </div>
             )}
           </CardContent>
         </CardHeader>

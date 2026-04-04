@@ -1,3 +1,4 @@
+import PurchaseButton from "@/components/PurchaseButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -55,7 +56,7 @@ const page = async () => {
               </Button>
 
               <Show when="signed-in">
-                <Button variant={"ghost"}>Purchase</Button>
+                <PurchaseButton courseId={course._id} />
               </Show>
               <Show when="signed-out">
                 <SignInButton mode="modal">

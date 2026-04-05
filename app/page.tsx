@@ -71,7 +71,14 @@ export default async function Home() {
                 </Show>
                 <Show when="signed-out">
                   <SignInButton mode="modal">
-                    <Button>Sign In to Enroll</Button>
+                    <Button
+                      className="flex items-center gap-1.5 text-white
+                bg-violet-500/15 hover:text-white border-violet-400/30
+                hover:bg-violet-500/25 hover:border-violet-400/50
+                transition-all duration-150"
+                    >
+                      Sign In to Enroll
+                    </Button>
                   </SignInButton>
                 </Show>
               </CardFooter>

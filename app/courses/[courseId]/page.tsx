@@ -97,7 +97,7 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
                   <p className="text-2xl text-white font-bold mb-2">
                     {courseData?.price.toFixed(2)}
                   </p>
-                  <PurchaseButton courseId={courseId} />
+                  <PurchaseButton courseId={courseId as Id<"courses">} />
                 </div>
               </div>
             )}

@@ -51,6 +51,7 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
             alt={courseData?.title ?? "Course image"}
             height={600}
             width={1200}
+            loading="eager"
           />
 
           <CardContent>

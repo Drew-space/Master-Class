@@ -37,6 +37,7 @@ const page = async () => {
                   alt={course.title}
                   width={640}
                   height={360}
+                  loading="eager"
                   className="rounded-md object-cover"
                 />
               </CardHeader>

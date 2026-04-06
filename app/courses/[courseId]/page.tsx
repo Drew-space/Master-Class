@@ -98,6 +98,10 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
                     {courseData?.price.toFixed(2)}
                   </p>
                   <PurchaseButton courseId={courseId as Id<"courses">} />
+                  <div className=" text-red-500 bg-red-100 ring ring-red-500 px-4 py-2 w-full">
+                    {" "}
+                    demo card, not a real payment
+                  </div>
                 </div>
               </div>
             )}

@@ -54,9 +54,14 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
           ? (error.data as string)
           : "Something went wrong. Please try again.";
 
-      alert(message);
+      // alert(message);
 
-      toast.error(message);
+      toast.error(message, {
+        style: {
+          border: "1px solid red",
+          color: "#fb2c36",
+        },
+      });
 
       console.log(error);
     } finally {

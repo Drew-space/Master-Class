@@ -7,7 +7,7 @@ import { RateLimiter, MINUTE } from "@convex-dev/rate-limiter";
 import { components } from "./_generated/api";
 
 const rateLimiter = new RateLimiter(components.rateLimiter, {
-  createCheckoutSession: { kind: "fixed window", rate: 1, period: MINUTE },
+  createCheckoutSession: { kind: "fixed window", rate: 3, period: MINUTE },
 });
 
 export const createCheckoutSession = action({
@@ -28,7 +28,6 @@ export const createCheckoutSession = action({
 
     // Todo: implement rate limiting
 
-    // ✅ RATE LIMIT
     const { ok } = await rateLimiter.limit(ctx, "createCheckoutSession", {
       key: user._id,
       throws: false,

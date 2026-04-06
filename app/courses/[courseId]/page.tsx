@@ -44,7 +44,7 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
   }
   return (
     <section className="container mx-auto py-8 px-4">
-      <Card className="max-w-xl bg-violet-500/15 ring-violet-400/30 ring-3  mx-auto ">
+      <Card className="max-w-md bg-violet-500/15 ring-violet-400/30 ring-3  mx-auto ">
         <CardHeader>
           <Image
             src={courseData?.imageUrl ?? ""}
@@ -54,7 +54,7 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
           />
 
           <CardContent>
-            <CardTitle className="text-3xl mb-4 text-white">
+            <CardTitle className="text-xl mb-4 text-white">
               {courseData?.title}
             </CardTitle>
 

@@ -7,6 +7,8 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
+import { ConvexError } from "convex/values";
+import { toast } from "sonner";
 
 const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
   const { user } = useUser();
@@ -47,12 +49,28 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
       }
     } catch (error) {
       // todo: handle error
+      const message =
+        error instanceof ConvexError
+          ? (error.data as string)
+          : "Something went wrong. Please try again.";
+
+      alert(message);
+
+      toast.error(message);
 
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <Button>
+        <Loader2Icon className="mr-2 size-5 animate-spin" />
+      </Button>
+    );
+  }
 
   //   if user has not bought any course or is not subscribed
   if (!userAccess.hasAccess) {
@@ -88,13 +106,6 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <Button>
-        <Loader2Icon className="mr-2 size-5 animate-spin" />
-      </Button>
-    );
-  }
   //   return (
   //     <div>
   //       <Button

@@ -60,12 +60,7 @@ const Navbar = () => {
               <span className="hidden sm:inline">Billing</span>
             </Button>
           </Link>
-        </Show>
-        <div className=""></div>
-
-        <UserButton />
-
-        <Show when="signed-in">
+          <UserButton />
           <SignOutButton>
             <Button
               variant="ghost"
@@ -82,6 +77,25 @@ const Navbar = () => {
             </Button>
           </SignOutButton>
         </Show>
+        <div className=""></div>
+
+        {/* <Show when="signed-in">
+          <SignOutButton>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hidden sm:flex items-center gap-1.5
+                text-white border-white/10
+                hover:bg-white/5 hover:border-white/18 hover:text-white/70
+                transition-all duration-150"
+            >
+              <div className="flex items-center gap-1.5">
+                <LogOutIcon className="size-3.75" />
+                <span className="hidden sm:inline">Log Out</span>
+              </div>
+            </Button>
+          </SignOutButton>
+        </Show> */}
 
         <Show when="signed-out">
           <SignInButton mode="modal">

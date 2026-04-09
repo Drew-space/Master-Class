@@ -18,9 +18,9 @@ export async function POST(request: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
-  } catch (err) {
+  } catch (err: any) {
     console.log(`⚠️  Webhook signature verification failed.`, err.message);
-    return new Response("Webhook signature verification failed", {
+    return new Response(`Webhook error: ${err.message}`, {
       status: 400,
     });
   }
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         break;
     }
   } catch (error) {
-    console.log(`⚠️  Error handling webhook event.`, (error as Error).message);
+    console.log(` Error handling webhook event.`, (error as Error).message);
     return new Response("Error handling webhook event", {
       status: 500,
     });
@@ -77,3 +77,5 @@ async function handleCheckoutSessionCompleted(
 
   //   todo: send email to user about purchase
 }
+
+//  stripe listen --forward-to localhost:3000/api/webhooks/stripe

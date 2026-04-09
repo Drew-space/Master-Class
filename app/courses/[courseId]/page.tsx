@@ -61,22 +61,24 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
 
             {userAccess.hasAccess ? (
               <>
-                <p className="text-white mb-6">{courseData?.description}</p>
+                <p className="text-white mb-6 ">{courseData?.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  <Button className="flex items-center justify-center space-x-2">
+                  <Button className="bg-violet-500/15 ring-violet-400/30 flex items-center justify-center space-x-2  hover:bg-violet-500/25 hover:border-violet-400/50 ">
                     <PlayCircle className="w-5 h-5" />
                     <span>Start Course</span>
                   </Button>
                   <Button
-                    variant="outline"
-                    className="flex items-center justify-center space-x-2"
+                    variant="ghost"
+                    className="flex bg-violet-500/15 text-white hover:text-white ring-violet-400/30 hover:bg-violet-500/25 hover:border-violet-400/50 items-center justify-center px-2 space-x-2"
                   >
                     <Download className="w-5 h-5" />
                     <span>Download Materials</span>
                   </Button>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Course Modules</h3>
-                <ul className="space-y-2">
+                <h3 className="text-xl text-white font-semibold mb-4">
+                  Course Modules
+                </h3>
+                <ul className="space-y-2 text-white">
                   <li className="flex item-center space-x-2">
                     <FileTextIcon className="size-5 text-white" />
                     <span>Introduction to Advanced Patterns </span>

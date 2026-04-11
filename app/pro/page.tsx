@@ -79,7 +79,7 @@ const ProPage = () => {
                 {plan.features.map((feature, fIdx) => (
                   <li key={fIdx} className="flex items-center">
                     <Check
-                      className={`h-5 w-5 ${plan.highlighted ? "text-purple-500" : "text-green-500"} mr-2 flex-shrink-0`}
+                      className={`h-5 w-5 ${plan.highlighted ? "text-purple-500" : "text-green-500"} mr-2 shrink-0`}
                     />
                     <span className="text-white">{feature}</span>
                   </li>

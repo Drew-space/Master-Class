@@ -55,8 +55,6 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
           ? (error.data as string)
           : "Something went wrong. Please try again.";
 
-      // alert(message);
-
       toast.error(message, {
         style: {
           border: "1px solid red",
@@ -111,21 +109,6 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
       </Button>
     );
   }
-
-  //   return (
-  //     <div>
-  //       <Button
-  //         variant="outline"
-  //         size="sm"
-  //         className="flex items-center gap-1.5 text-white
-  //                 bg-violet-500/15 hover:text-white border-violet-400/30
-  //                 hover:bg-violet-500/25 hover:border-violet-400/50
-  //                 transition-all duration-150"
-  //       >
-  //         <span>Purchase Course</span>
-  //       </Button>
-  //     </div>
-  //   );
 };
 
 export default PurchaseButton;

@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/card";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
-import { useQuery } from "convex/react";
+import { useAction, useQuery } from "convex/react";
 import { PRO_PLANS } from "../constants";
 import { Check, Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ProPage = () => {
   const { user, isLoaded: isUserLoaded } = useUser();
@@ -34,8 +35,28 @@ const ProPage = () => {
     userSubscription?.status === "active" &&
     userSubscription?.planType === "year";
 
-  const handlePlanSelection = (planId: string) => {
+  const createProPlanCheckoutSession = useAction(
+    api.stripe.createProPlanCheckoutSession,
+  );
+
+  const handlePlanSelection = async (planId: "month" | "year") => {
+    if (!user) {
+      toast.error("Please login to select a plan", { position: "top-center" });
+      return;
+    }
+
     // Implementation for handling plan selection
+
+    setLoadingPlan(planId);
+    try {
+      const result = await createProPlanCheckoutSession({ planId });
+      if (result.checkoutUrl) {
+        window.location.assign(result.checkoutUrl);
+      }
+    } catch (error) {
+      toast.error("there was an error in your purchase, please try again");
+      console.log(error);
+    }
   };
 
   return (

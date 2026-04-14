@@ -11,6 +11,7 @@ export const PRO_PLANS = [
       "Monthly live Q&A sessions",
     ],
     ctaText: "Start Monthly Plan",
+    highlighted: false,
   },
   {
     id: "year",
@@ -26,4 +27,4 @@ export const PRO_PLANS = [
     ctaText: "Get Yearly Plan",
     highlighted: true,
   },
-];
+] as const;

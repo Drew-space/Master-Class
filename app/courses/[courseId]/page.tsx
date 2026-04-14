@@ -22,9 +22,10 @@ const CoursePage = ({ params }: { params: Promise<{ courseId: string }> }) => {
   const { courseId } = use(params);
   const { user, isLoaded } = useUser();
 
-  const userData = useQuery(api.users.getUserByClerkId, {
-    clerkId: user?.id ?? "",
-  });
+  const userData = useQuery(
+    api.users.getUserByClerkId,
+    isLoaded && user ? { clerkId: user.id } : "skip",
+  );
 
   const courseData = useQuery(api.courses.getCourseById, {
     courseId: courseId as Id<"courses">,

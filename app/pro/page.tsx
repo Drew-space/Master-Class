@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -11,27 +12,34 @@ import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { PRO_PLANS } from "../constants";
-import { Check } from "lucide-react";
+import { Check, Loader2Icon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const ProPage = () => {
   const { user, isLoaded: isUserLoaded } = useUser();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
   const userData = useQuery(
     api.users.getUserByClerkId,
     user ? { clerkId: user?.id } : "skip",
   );
 
-  const UserSubscription = useQuery(
+  const userSubscription = useQuery(
     api.subscriptions.getUserSubscriptionStatus,
     userData ? { userId: userData._id } : "skip",
   );
 
-  const isYearlySubscribtionActive =
-    UserSubscription?.status === "active" &&
-    UserSubscription?.planType === "year";
+  const isYearlySubscriptionActive =
+    userSubscription?.status === "active" &&
+    userSubscription?.planType === "year";
+
+  const handlePlanSelection = (planId: string) => {
+    // Implementation for handling plan selection
+  };
 
   return (
-    <div className="mx-auto container px-4 py-16 ,max-w-6xl">
+    <div className="mx-auto container px-4 py-16 ,max-w-6xl h-screen">
       <h1 className="text-4xl font-bold text-center mb-4 text-white">
         Choose Your Pro Journey
       </h1>
@@ -39,17 +47,17 @@ const ProPage = () => {
         Unlock the full potential of our platform with a Pro subscription.
       </p>
 
-      {isUserLoaded && UserSubscription?.status === "active" && (
+      {isUserLoaded && userSubscription?.status === "active" && (
         <div className="bg-violet-500/15  ring-violet-400/30 p-4 mb-8  ring-l-4  rounded-md">
           <p className="text-xl text-white">
             You have an active{" "}
-            <span className="font-semibold"> {UserSubscription.planType}</span>{" "}
+            <span className="font-semibold"> {userSubscription.planType}</span>{" "}
             subscription.
           </p>
         </div>
       )}
 
-      <div className="grid md:grid-cols-2 items-stretch">
+      <div className="grid md:grid-cols-2 gap-9 items-stretch">
         {PRO_PLANS.map((plan) => (
           <Card
             key={plan.id}
@@ -86,6 +94,39 @@ const ProPage = () => {
                 ))}
               </ul>
             </CardContent>
+
+            <CardFooter className="mt-auto">
+              <Button
+                className={`w-full py-6 text-lg ${
+                  plan.highlighted
+                    ? "bg-purple-600 hover:bg-purple-700 text-white"
+                    : "bg-white text-purple-600 border-2 border-purple-600 hover:bg-purple-50"
+                }`}
+                onClick={() => handlePlanSelection(plan.id)}
+                disabled={
+                  userSubscription?.status === "active" &&
+                  (userSubscription?.planType === plan.id ||
+                    isYearlySubscriptionActive)
+                }
+              >
+                {loadingPlan === plan.id ? (
+                  <>
+                    <Loader2Icon className="mr-2 size-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : isUserLoaded &&
+                  userSubscription?.status === "active" &&
+                  userSubscription.planType === plan.id ? (
+                  "Current Plan"
+                ) : isUserLoaded &&
+                  plan.id === "month" &&
+                  isYearlySubscriptionActive ? (
+                  "Yearly Plan Active"
+                ) : (
+                  plan.ctaText
+                )}
+              </Button>
+            </CardFooter>
           </Card>
         ))}
       </div>

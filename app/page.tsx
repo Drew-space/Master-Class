@@ -11,7 +11,7 @@ import {
 import { api } from "@/convex/_generated/api";
 import { Show, SignInButton } from "@clerk/nextjs";
 import { ConvexHttpClient } from "convex/browser";
-import { Sign } from "crypto";
+
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

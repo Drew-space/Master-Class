@@ -115,9 +115,7 @@ export const createProPlanCheckoutSession = action({
     );
 
     if (!ok) {
-      throw new ConvexError(
-        "Too many  attempts. Please wait try again later .",
-      );
+      throw new ConvexError("Too many  attempts. Please  try again later .");
     }
 
     let priceId;

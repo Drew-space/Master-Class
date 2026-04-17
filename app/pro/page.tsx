@@ -16,6 +16,7 @@ import { Check, Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ConvexError } from "convex/values";
 
 const ProPage = () => {
   const { user, isLoaded: isUserLoaded } = useUser();
@@ -54,7 +55,17 @@ const ProPage = () => {
         window.location.assign(result.checkoutUrl);
       }
     } catch (error) {
-      toast.error("there was an error in your purchase, please try again");
+      const message =
+        error instanceof ConvexError
+          ? (error.data as string)
+          : "Something went wrong. Please try again.";
+
+      toast.error(message, {
+        style: {
+          border: "1px solid red",
+          color: "#fb2c36",
+        },
+      });
       console.log(error);
     }
   };
